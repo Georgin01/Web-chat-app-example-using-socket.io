@@ -4,6 +4,7 @@ import io from 'socket.io-client';
 
 import './Chat.css';
 import ChatBar from '../ChatBar/ChatBar';
+import Input from '../Input/Input';
 
 let socket;
 
@@ -46,6 +47,8 @@ const Chat = ({ location }) =>{
         <div className="chatContainer">
             <div className="container">
                 <ChatBar room={ room }/>
+
+                <Input  message={ message } setMessage={setMessage} sendMessage={sendMessage}/>
             </div>
         </div>
     );
