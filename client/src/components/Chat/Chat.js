@@ -7,6 +7,8 @@ let socket;
 const Chat = ({ loc }) =>{
     const [name, setName] = useState('');
     const [room, setRoom] = useState('');
+    const [message, setMessage] = useState('');
+    const [messages, setMessages] = useState([]);
 
     useEffect(() => {
         const { name, room } = queryStr.parse(loc.search);
@@ -16,7 +18,9 @@ const Chat = ({ loc }) =>{
         setName(name);
         setRoom(room);
 
-        socket.emit('join', { name, room });
+        socket.emit('join', { name, room }, () => {
+
+        });
 
         return () => {
             socket.emit('disconnect');
@@ -25,6 +29,12 @@ const Chat = ({ loc }) =>{
         }
 
     }, ['localhost:5000', loc.search]);
+
+    useEffect(() => {
+        socket.on('message', (message) => {
+            setMessages([...messages, message]);
+        });
+    }, [messages]);
 
     return(
         <h1>Chat</h1>
