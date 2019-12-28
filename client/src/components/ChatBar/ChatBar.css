@@ -1,0 +1,52 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.chatBar{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #71909f;
+    border-radius: 8px 8px 0 0 ;
+    height: 60px;
+    width: 100%;
+}
+
+.leftBar{
+    flex: 0.5;
+    display: flex;
+    align-items: center;
+    margin-left: 5%;
+    color: white;
+}
+
+.rightBar{
+    display: flex;
+    flex: 0.5;
+    justify-content: flex-end;
+    margin-right: 5%;
+}
+
+.close{
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.close:hover {
+    color: #e2dfe2;
+}
+
+.onlineSign{
+    width: 5px;
+    height: 5px;
+    margin-right: 5%;
+    background-color: #44ff71;
+    border-radius: 50%;
+}

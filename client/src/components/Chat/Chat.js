@@ -2,33 +2,31 @@ import React, { useState, useEffect } from 'react';
 import queryStr from 'query-string';
 import io from 'socket.io-client';
 
+import './Chat.css';
+import ChatBar from '../ChatBar/ChatBar';
+
 let socket;
 
-const Chat = ({ loc }) =>{
+const Chat = ({ location }) =>{
     const [name, setName] = useState('');
     const [room, setRoom] = useState('');
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
 
     useEffect(() => {
-        const { name, room } = queryStr.parse(loc.search);
+        const { name, room } = queryStr.parse(location.search);
 
-        socket = io('localhost:5000');
+        socket = io('http://localhost:8000');
 
         setName(name);
         setRoom(room);
 
-        socket.emit('join', { name, room }, () => {
-
+        socket.emit('join', { name, room }, (error) => {
+            if(error) {
+                alert(error);
+            }
         });
-
-        return () => {
-            socket.emit('disconnect');
-
-            socket.off();
-        }
-
-    }, ['localhost:5000', loc.search]);
+    }, ['http://localhost:8000', location.search]);
 
     useEffect(() => {
         socket.on('message', (message) => {
@@ -36,8 +34,20 @@ const Chat = ({ loc }) =>{
         });
     }, [messages]);
 
+    const sendMessage = (event) => {
+        event.preventDefault();
+
+        if(message){
+            socket.emit('sendMessage', message, () => setMessage(''));
+        }
+    };
+
     return(
-        <h1>Chat</h1>
+        <div className="chatContainer">
+            <div className="container">
+                <ChatBar room={ room }/>
+            </div>
+        </div>
     );
 
 };
