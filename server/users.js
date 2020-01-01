@@ -1,12 +1,14 @@
 const users = [];
 
+//Add user to array
 const addUser = ({ id, name, room }) => {
     name = name.trim().toLowerCase();
     room = room.trim().toLowerCase();
 
-    const exsistUser = users.find( user => user.room === room && user.name === name);
+    //Check if user exist in array
+    const existUser = users.find( user => user.room === room && user.name === name);
 
-    if(exsistUser) return {error: 'Username is taken'};
+    if(existUser) return {error: 'Username is taken'};
 
     const user = { id, name, room};
 
@@ -15,6 +17,7 @@ const addUser = ({ id, name, room }) => {
     return { user };
 };
 
+//Remove user from array
 const removeUser = (id) => {
     const index = users.findIndex( user => user.id === id);
 
